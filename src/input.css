@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Brand palette (extracted from the Zyanesha's logo):
+   cream #f6eee3, gold #b0894f, espresso #3a2718.
+   Remaps Tailwind's `green` (the site accent) and `amber` (stars) scales onto a
+   cream-to-gold-to-espresso ramp, so the existing accent utility classes adopt
+   the logo colors without editing the markup. */
+@theme {
+  --color-cream: #fcf2e9;
+  --color-espresso: #3a2718;
+
+  /* accent ramp: light tan → gold → espresso (light at 200, dark at 700+) */
+  --color-green-50: #f6eee3;
+  --color-green-100: #eddcc3;
+  --color-green-200: #e2c9a1;
+  --color-green-300: #d2ae77;
+  --color-green-400: #c1985a;
+  --color-green-500: #b0894f;
+  --color-green-600: #9a7038;
+  --color-green-700: #5c4327;
+  --color-green-800: #43301b;
+  --color-green-900: #2e2012;
+
+  /* stars / warm accents → gold */
+  --color-amber-50: #f7efe0;
+  --color-amber-100: #f0e2c8;
+  --color-amber-200: #e6cf9c;
+  --color-amber-300: #d8b878;
+  --color-amber-400: #c69a4b;
+  --color-amber-500: #b0894f;
+}

@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Zyanesha's Transient House — Vigan City</title>
+    <meta name="description" content="A comfortable, homey stay in Bulala Norte, Vigan City, Ilocos Sur. Walk to Hidden Garden and just a short drive from Calle Crisologo and Vigan's best spots." />
+    <link rel="canonical" href="https://zyanesha.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon (Zyanesha's circular logo) -->
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dyiypemve/image/upload/c_fill,ar_1:1,g_auto,r_max,f_png,q_auto,w_180/v1783863935/1b09e7e9-fda7-4116-b887-164e38f139ce.png" />
+    <link rel="apple-touch-icon" href="https://res.cloudinary.com/dyiypemve/image/upload/c_fill,ar_1:1,g_auto,r_max,f_png,q_auto,w_180/v1783863935/1b09e7e9-fda7-4116-b887-164e38f139ce.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://zyanesha.com/" />
+    <meta property="og:title" content="Zyanesha's Transient House — Vigan City" />
+    <meta property="og:description" content="A comfortable, homey stay in Bulala Norte, Vigan City, Ilocos Sur — minutes from Calle Crisologo and Vigan's best spots." />
+    <meta property="og:image" content="https://zyanesha.com/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Zyanesha's Transient House — Vigan City" />
+    <meta name="twitter:description" content="A comfortable, homey stay in Bulala Norte, Vigan City, Ilocos Sur — minutes from Calle Crisologo and Vigan's best spots." />
+    <meta name="twitter:image" content="https://zyanesha.com/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Outfit:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" href="./css/output.css" />
+
+    <!-- Pre-hide load-in elements so there's no flash before GSAP runs -->
+    <style>
+      .anim-in { opacity: 0; }
+      .reveal, .reveal-photo { opacity: 0; } /* pre-hidden; ScrollTrigger fades these up on scroll */
+
+      /* Location divider: grows from its center when scrolled into view —
+         horizontal (scaleX) on mobile, vertical (scaleY) on md+. */
+      .loc-divider { transform: scaleX(0); transform-origin: center; transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+      @media (min-width: 768px) { .loc-divider { transform: scaleY(0); } }
+      .loc-divider.is-in { transform: scale(1); }
+      @media (prefers-reduced-motion: reduce) { .loc-divider { transform: none; transition: none; } }
+
+      /* Graph-paper grid — faint espresso lines on the cream bg, used only in the
+         corners and feathered out with a mask so it dissolves rather than hard-cuts. */
+      .grid-paper {
+        background-image:
+          linear-gradient(to right, rgba(58, 39, 24, 0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(58, 39, 24, 0.06) 1px, transparent 1px);
+        background-size: 34px 34px;
+      }
+
+      /* CTA gradient bars: solid body + a repeating triangle (zigzag) top edge.
+         The teeth tile repeats every --tooth px; the bar is wider than its container
+         and slides horizontally, so the teeth appear to scroll. */
+      .jag-bar {
+        --tooth: 46px;
+        --tHeight: 16px;
+        -webkit-mask:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='16'%3E%3Cpolygon points='0,16 23,0 46,16' fill='%23000'/%3E%3C/svg%3E") top left / var(--tooth) var(--tHeight) repeat-x,
+          linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--tHeight) + 1px) no-repeat;
+        mask:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='16'%3E%3Cpolygon points='0,16 23,0 46,16' fill='%23000'/%3E%3C/svg%3E") top left / var(--tooth) var(--tHeight) repeat-x,
+          linear-gradient(#000, #000) bottom left / 100% calc(100% - var(--tHeight) + 1px) no-repeat;
+      }
+    </style>
+  </head>
+  <body class="flex min-h-screen flex-col bg-cream text-neutral-900 antialiased">
+    <!-- Graph-paper grid feathered into two opposite corners (behind everything) -->
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
+      <div
+        class="grid-paper absolute right-0 top-0 h-[45vh] w-[62vw] max-w-3xl"
+        style="-webkit-mask-image: linear-gradient(to bottom left, #000, transparent 72%); mask-image: linear-gradient(to bottom left, #000, transparent 72%)"
+      ></div>
+      <div
+        class="grid-paper absolute bottom-0 left-0 h-[45vh] w-[62vw] max-w-3xl"
+        style="-webkit-mask-image: linear-gradient(to top right, #000, transparent 72%); mask-image: linear-gradient(to top right, #000, transparent 72%)"
+      ></div>
+    </div>
+
+    <!-- Hero -->
+    <main class="relative mx-auto grid min-h-screen w-full max-w-6xl grid-cols-1 items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:gap-8">
+      <!-- Left: heading -->
+      <div class="text-center">
+        <img
+          src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,w_900/v1783860558/Untitled_design_14_qucau1.png"
+          alt="Zyanesha's logo"
+          class="mx-auto block h-[8em] w-[12em] object-cover"
+        />
+        <p
+          class="anim-in hero-eyebrow mb-4 whitespace-nowrap text-4xl text-neutral-800 sm:text-6xl lg:text-7xl"
+          style="font-family: 'Playfair Display', serif; font-style: italic"
+        >
+          <svg class="mr-1 inline-block h-[0.18em] w-auto align-middle text-green-500" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+            <path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" />
+          </svg>
+          Zyanesha's
+          <svg class="ml-1 inline-block h-[0.18em] w-auto -scale-x-100 align-middle text-green-500" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+            <path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" />
+          </svg>
+        </p>
+        <h1 class="anim-in hero-title text-4xl font-semibold leading-[0.74] tracking-tight sm:text-6xl lg:text-7xl" style="font-family: 'Cinzel', serif">
+          Transient
+          <span class="text-green-600">House</span>
+        </h1>
+
+        <!-- Social / booking / location -->
+        <div class="anim-in hero-cta mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:gap-4">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <a
+              href="https://www.facebook.com/zyanesha/"
+              target="_blank"
+              rel="noopener"
+              aria-label="Facebook"
+              class="flex h-9 w-9 items-center justify-center rounded-full text-[#1877F2] transition hover:-translate-y-0.5 hover:brightness-105 sm:h-11 sm:w-11"
+            >
+              <i class="ri-facebook-circle-fill text-3xl sm:text-4xl"></i>
+            </a>
+            <!-- Book Now button -->
+            <a
+              href="https://www.airbnb.com/rooms/31763148"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 rounded-full bg-[#FF385C] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#FF385C]/30 transition hover:-translate-y-0.5 hover:brightness-105 sm:px-5 sm:py-2.5 sm:text-base"
+            >
+              Book Now
+            </a>
+            <span class="inline-flex items-center gap-1 text-base font-semibold text-amber-500 sm:gap-1.5 sm:text-xl">
+              <i class="ri-star-fill text-lg sm:text-2xl"></i>
+              4.85
+            </span>
+          </div>
+          <div class="flex flex-col items-center gap-2 text-sm text-neutral-600 sm:text-base">
+            <a
+              href="https://www.google.com/maps/place/Zyanesha's+Transient+House/@17.5609935,120.3660233,17z/data=!4m14!1m7!3m6!1s0x338e650c61e485a3:0x1785eace549c508b!2sZyanesha's+Transient+House!8m2!3d17.5609935!4d120.3660233!16s%2Fg%2F11q9jqg7ff!3m5!1s0x338e650c61e485a3:0x1785eace549c508b!8m2!3d17.5609935!4d120.3660233!16s%2Fg%2F11q9jqg7ff"
+              target="_blank"
+              rel="noopener"
+              class="flex items-center gap-2 transition hover:text-green-700"
+            >
+              <i class="ri-map-pin-2-fill text-base text-green-600 sm:text-lg"></i>
+              Bulala Norte, Vigan City, Ilocos Sur
+            </a>
+            <div class="flex items-center gap-2">
+              <i class="ri-phone-fill text-base text-green-600 sm:text-lg"></i>
+              +63 910 983 3388
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="ri-mail-fill text-base text-green-600 sm:text-lg"></i>
+              bheng.ardiente@yahoo.com
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: floating collage -->
+      <div class="relative mx-auto h-[420px] w-full max-w-md lg:h-[520px]">
+        <div class="float-el anim-in absolute left-[4%] top-[6%] w-40 rotate-[-8deg] rounded-2xl border-4 border-white bg-gradient-to-br from-emerald-300 to-teal-500 shadow-xl sm:w-48">
+          <div class="aspect-[3/4] overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_auto,ar_3:4,w_600/v1783842405/1c15539f-9e8a-4ef9-8b41-4b701b60d06e.png" alt=""></div>
+        </div>
+        <div class="float-el anim-in absolute right-[2%] top-0 w-36 rotate-[7deg] rounded-2xl border-4 border-white bg-gradient-to-br from-amber-200 to-orange-400 shadow-xl sm:w-44">
+          <div class="aspect-square overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_auto,ar_1:1,w_500/v1783842340/58305f15-46d0-4561-9224-02a29bc0f109.png" alt=""></div>
+        </div>
+        <div class="float-el anim-in absolute left-[18%] top-[42%] w-44 rotate-[4deg] rounded-2xl border-4 border-white bg-gradient-to-br from-sky-300 to-indigo-500 shadow-2xl sm:w-52">
+          <div class="aspect-[4/3] overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_auto,ar_4:3,w_600/v1783842309/80473dc7-4f6a-4c80-be79-a3408b0817a7.png" alt=""></div>
+        </div>
+        <div class="float-el anim-in absolute right-[6%] bottom-[4%] w-32 rotate-[-6deg] rounded-2xl border-4 border-white bg-gradient-to-br from-rose-300 to-pink-500 shadow-xl sm:w-40">
+          <div class="aspect-[3/4] overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_south,ar_3:4,w_600/v1783842289/9948f39d-3a7e-4f92-b8e8-3fbd74f4d034.png" alt=""></div>
+        </div>
+        <div class="float-el anim-in absolute left-[0%] bottom-[10%] w-32 rotate-[6deg] rounded-2xl border-4 border-white bg-gradient-to-br from-violet-300 to-purple-500 shadow-xl sm:w-40">
+          <div class="aspect-square overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_south,ar_1:1,w_500/v1783842319/9a601b5b-b9e1-45ba-8ae5-93967350b1b4.png" alt=""></div>
+        </div>
+        <div class="float-el anim-in absolute right-[22%] top-[30%] w-28 rotate-[-4deg] rounded-2xl border-4 border-white bg-gradient-to-br from-lime-300 to-green-500 shadow-2xl sm:w-36">
+          <div class="aspect-[3/4] overflow-hidden rounded-xl"><img class="h-full w-full object-cover" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_south,ar_3:4,w_500/v1783842223/a9c3940d-b073-4be6-9f18-cac92c218af2.png" alt=""></div>
+        </div>
+
+        <!-- Chatty reviews overlaid on the collage (design-skills: chat-bubble-pop, on load) -->
+        <div class="pointer-events-none absolute inset-0 z-30">
+          <!-- left bubble: avatar on the left -->
+          <div class="review-pop absolute -left-4 top-[16%] flex items-end gap-2">
+            <div class="r-part r-avatar flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-600 text-xs font-semibold text-white shadow-md ring-2 ring-white/80" style="visibility: hidden">EL</div>
+            <div class="r-part max-w-[13rem] rounded-2xl rounded-bl-md bg-gradient-to-b from-white/55 to-white/30 px-3.5 py-2.5 shadow-xl ring-1 ring-white/60 backdrop-blur-md" style="visibility: hidden">
+              <div class="flex items-center gap-1.5">
+                <span class="r-name text-xs font-semibold text-neutral-800">Enrico Louis</span>
+                <span class="text-[11px] tracking-wide text-amber-400">★★★★★</span>
+              </div>
+              <p class="r-text mt-0.5 text-[13px] leading-snug text-neutral-700">Very polite host, very comfortable place</p>
+            </div>
+          </div>
+
+          <!-- right bubble: avatar on the right -->
+          <div class="review-pop absolute -right-3 bottom-[14%] flex flex-row-reverse items-end gap-2">
+            <div class="r-part r-avatar flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-500 text-xs font-semibold text-white shadow-md ring-2 ring-white/80" style="visibility: hidden">HE</div>
+            <div class="r-part max-w-[13rem] rounded-2xl rounded-br-md bg-gradient-to-b from-white/55 to-white/30 px-3.5 py-2.5 shadow-xl ring-1 ring-white/60 backdrop-blur-md" style="visibility: hidden">
+              <div class="flex items-center justify-end gap-1.5">
+                <span class="text-[11px] tracking-wide text-amber-400">★★★★★</span>
+                <span class="r-name text-xs font-semibold text-neutral-800">Herminio</span>
+              </div>
+              <p class="r-text mt-0.5 text-right text-[13px] leading-snug text-neutral-700">Very accommodating and helpful</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Property gallery -->
+    <section id="gallery" class="mx-auto w-full max-w-6xl px-6 py-20">
+      <div class="reveal mb-12 text-center">
+        <p class="kicker mb-2 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-green-600">
+          <span class="fl inline-flex"><svg class="h-[0.9em] w-auto" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" /></svg></span>
+          The Property
+          <span class="fl inline-flex"><svg class="h-[0.9em] w-auto -scale-x-100" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" /></svg></span>
+        </p>
+        <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl" style="font-family: 'Playfair Display', serif">Take a look</h2>
+        <p class="mx-auto mt-3 max-w-xl text-neutral-500">
+          A cozy, homey transient house in Bulala Norte — your comfortable base for exploring
+          Vigan City.
+        </p>
+      </div>
+
+      <!-- Split: rooms info (left) + gallery (right); stacks on smaller screens -->
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
+        <!-- Left: what's inside -->
+        <div class="reveal lg:sticky lg:top-24">
+          <div class="mb-8 text-center lg:text-left">
+            <div class="text-4xl font-semibold sm:text-5xl">
+              <span class="mr-1.5 align-baseline text-6xl leading-none text-green-600 sm:text-7xl" style="font-family: 'Playfair Display', serif; font-style: italic">2</span>Rooms
+            </div>
+            <p class="mt-2 text-neutral-500">Up to 16 guests</p>
+          </div>
+
+          <!-- What each room contains -->
+          <div class="overflow-hidden border border-neutral-200 bg-white shadow-sm" style="border-radius: 34px 14px 32px 16px">
+            <p class="border-b border-neutral-100 bg-neutral-50 px-6 py-3 text-center text-sm font-semibold uppercase tracking-wide text-neutral-500">
+              Each room contains
+            </p>
+            <div class="grid grid-cols-1 divide-y divide-neutral-100 sm:grid-cols-2 sm:divide-x sm:divide-y">
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-hotel-bed-line text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">2 bunk beds &middot; good for 6&ndash;8 pax</span>
+              </div>
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-drop-line text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">Own bathroom &middot; hot &amp; cold water</span>
+              </div>
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-temp-cold-line text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">Fully air-conditioned</span>
+              </div>
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-tv-2-line text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">TV with cable</span>
+              </div>
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-t-shirt-line text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">Hanger rack &amp; clothing storage</span>
+              </div>
+              <div class="flex items-center gap-3 p-4 sm:p-5">
+                <i class="ri-hotel-bed-fill text-2xl text-green-600"></i>
+                <span class="font-medium text-neutral-700">Additional floor mattress</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Free parking + Internet -->
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <div class="flex items-center gap-3 border border-neutral-200 bg-white px-5 py-4 shadow-sm" style="border-radius: 14px 30px 16px 32px">
+              <i class="ri-parking-box-line text-2xl text-green-600"></i>
+              <span class="font-medium text-neutral-700">Free parking space</span>
+            </div>
+            <div class="flex items-center gap-3 border border-neutral-200 bg-white px-5 py-4 shadow-sm" style="border-radius: 30px 14px 32px 16px">
+              <i class="ri-wifi-line text-2xl text-green-600"></i>
+              <span class="font-medium text-neutral-700">Internet</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: gallery -->
+        <div class="grid grid-cols-2 gap-4 sm:gap-5">
+        <div class="reveal-photo col-span-2 overflow-hidden shadow-2xl" style="border-radius: 40px 40px 18px 44px; aspect-ratio: 16/9">
+          <img class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_auto,ar_16:9,w_1000/v1783863268/Untitled_design_16_cqxskt.png" alt="Property photo" />
+        </div>
+        <div class="reveal-photo overflow-hidden shadow-2xl" style="border-radius: 44px 14px 40px 18px; aspect-ratio: 3/4">
+          <img class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,c_fill,g_auto,ar_3:4,w_800/v1783863260/Untitled_design_17_hcv2fm.png" alt="Property photo" />
+        </div>
+        <div class="reveal-photo overflow-hidden shadow-2xl" style="border-radius: 16px 42px 14px 44px; aspect-ratio: 3/4">
+          <img class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" src="https://res.cloudinary.com/dyiypemve/image/upload/v1783920020/Untitled_design_19_svawdc.png" alt="Property photo" />
+        </div>
+        <div class="reveal-photo overflow-hidden shadow-2xl" style="border-radius: 40px 16px 46px 12px; aspect-ratio: 4/5">
+          <img class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" src="https://res.cloudinary.com/dyiypemve/image/upload/v1783922444/Untitled_design_22_vmzfud.png" alt="Property photo" />
+        </div>
+        <div class="reveal-photo overflow-hidden shadow-2xl" style="border-radius: 14px 46px 16px 42px; aspect-ratio: 4/5">
+          <img class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" src="https://res.cloudinary.com/dyiypemve/image/upload/v1783922216/Untitled_design_20_iztjg8.png" alt="Property photo" />
+        </div>
+        <div class="reveal-photo col-span-2">
+          <!-- View more photos on Airbnb -->
+          <div class="reveal mt-10 flex justify-center">
+            <a
+              href="https://www.airbnb.com/rooms/31763148?modal=PHOTO_TOUR_SCROLLABLE"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 rounded-full bg-[#FF385C] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#FF385C]/30 transition hover:-translate-y-0.5 hover:brightness-105 sm:px-5 sm:py-2.5 sm:text-base"
+            >
+              View more photos
+            </a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's nearby -->
+    <section id="nearby" class="mx-auto w-full max-w-6xl px-6 py-20">
+      <!-- "The Location" kicker centered at the top -->
+      <div class="reveal mb-10 text-center">
+        <p class="kicker inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-green-600">
+          <span class="fl inline-flex"><svg class="h-[0.9em] w-auto" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" /></svg></span>
+          The Location
+          <span class="fl inline-flex"><svg class="h-[0.9em] w-auto -scale-x-100" viewBox="0 0 64 26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M2 13c4-6 12-5 12 1s-8 6-8 0c0-7 12-8 22-1 8 5 16 5 22-1 5-5 12-4 12 2s-7 7-9 2" /></svg></span>
+        </p>
+      </div>
+
+      <!-- Two columns: heading + distance cards on the left, live map on the right -->
+      <div class="grid items-start gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-12">
+        <div class="space-y-4">
+          <!-- Heading, left-aligned -->
+          <div class="reveal text-center md:text-left">
+            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl" style="font-family: 'Playfair Display', serif">Everything's close</h2>
+            <p class="mx-auto mt-3 max-w-xl text-neutral-500 md:mx-0">
+              Leisure is just a few minutes away.
+            </p>
+          </div>
+
+          <!-- Walking distance + 5 mins drive share a row -->
+          <div class="reveal grid gap-4 sm:grid-cols-2">
+            <!-- Walking distance -->
+            <div class="flex items-center gap-3 border border-neutral-200 bg-white p-5 shadow-sm" style="border-radius: 34px 14px 32px 16px">
+              <i class="ri-walk-line text-2xl text-green-600"></i>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wide text-green-600">Walking distance</p>
+                <p class="font-medium text-neutral-700">Hidden Garden</p>
+              </div>
+            </div>
+
+            <!-- 5 mins drive -->
+            <div class="flex items-center gap-3 border border-neutral-200 bg-white p-5 shadow-sm" style="border-radius: 16px 34px 14px 32px">
+              <i class="ri-sun-line text-2xl text-green-600"></i>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wide text-green-600">5 min drive</p>
+                <p class="font-medium text-neutral-700">Mindoro Beach & Mira Hills</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 mins drive -->
+          <div class="reveal flex flex-col gap-4 border border-neutral-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center" style="border-radius: 32px 16px 34px 14px">
+            <div class="flex shrink-0 items-center gap-2 sm:w-40">
+              <i class="ri-car-line text-2xl text-green-600"></i>
+              <span class="text-xs font-semibold uppercase tracking-wide text-green-600">7 min drive</span>
+            </div>
+            <p class="font-medium text-neutral-700">
+              Calle Crisologo, Dancing Fountain, Vigan Cathedral, Baluarte Zoo, Crisologo Museum, Quirino Museum, Burgos Museum
+            </p>
+          </div>
+        </div>
+
+        <!-- Divider: horizontal on mobile, vertical on desktop; expands from the middle on scroll -->
+        <div class="loc-divider self-stretch mx-auto h-0.5 w-full rounded-full bg-green-600 opacity-20 md:h-full md:w-0.5" aria-hidden="true"></div>
+
+        <!-- Right: live map of the property -->
+        <div>
+          <h3 class="reveal mb-4 text-center text-4xl font-semibold tracking-tight sm:text-5xl md:text-left" style="font-family: 'Playfair Display', serif">Find us</h3>
+          <div class="reveal overflow-hidden border-4 border-white bg-white shadow-xl" style="border-radius: 32px 16px 34px 14px">
+          <iframe
+            title="Map to Zyanesha's Transient House"
+            src="https://www.google.com/maps?q=Zyanesha's+Transient+House,+Bulala+Norte,+Vigan+City,+Ilocos+Sur&ll=17.5609935,120.3660233&z=18&output=embed"
+            class="block h-[380px] w-full md:h-[520px]"
+            style="border: 0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Book / CTA (stacked rectangles forming a gradient) -->
+    <section id="pricing" class="relative overflow-hidden">
+      <!-- Stacked gradient bars with a jagged (triangle) top edge that scrolls.
+           Masked to fade out fully at the top and be fully opaque toward the bottom. -->
+      <div
+        class="absolute inset-0 -z-10 flex flex-col"
+        aria-hidden="true"
+        style="
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 80%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 80%);
+        "
+      >
+        <div class="jag-bar flex-1 bg-green-200" style="width: calc(100% + 160px); margin-left: -80px"></div>
+        <div class="jag-bar flex-1 bg-green-300" style="width: calc(100% + 160px); margin-left: -80px; margin-top: -15px"></div>
+        <div class="jag-bar flex-1 bg-green-400" style="width: calc(100% + 160px); margin-left: -80px; margin-top: -15px"></div>
+        <div class="jag-bar flex-1 bg-green-500" style="width: calc(100% + 160px); margin-left: -80px; margin-top: -15px"></div>
+        <div class="jag-bar flex-1 bg-green-600" style="width: calc(100% + 160px); margin-left: -80px; margin-top: -15px"></div>
+        <div class="jag-bar flex-1 bg-green-700" style="width: calc(100% + 160px); margin-left: -80px; margin-top: -15px"></div>
+      </div>
+
+      <div class="cta-block mx-auto flex w-full max-w-2xl flex-col items-center px-6 py-24 text-center text-white" style="text-shadow: 0 1px 6px rgba(0,0,0,0.25)">
+        <h2 class="cta-title max-w-xl text-5xl font-normal leading-tight sm:text-6xl" style="font-family: 'Great Vibes', cursive">
+          Your home away from home.
+        </h2>
+        <a
+          href="https://www.airbnb.com/rooms/31763148"
+          target="_blank"
+          rel="noopener"
+          class="cta-btn mt-6 inline-flex items-center gap-2 rounded-full bg-[#FF385C] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#FF385C]/30 transition hover:-translate-y-0.5 hover:brightness-105 sm:px-5 sm:py-2.5 sm:text-base"
+          style="text-shadow: none"
+        >
+          Book Now
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative overflow-hidden bg-neutral-900 text-neutral-400">
+      <!-- Tattoo watermark: faint, low-opacity brand mark embossed behind the content -->
+      <img
+        src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,w_900/v1783860558/Untitled_design_14_qucau1.png"
+        alt=""
+        aria-hidden="true"
+        class="pointer-events-none absolute -left-10 top-1/2 w-[460px] max-w-none -translate-y-1/2 select-none opacity-[0.13] sm:-left-4 sm:w-[440px]"
+        style="filter: grayscale(0.55) contrast(0.72) brightness(1.45); mix-blend-mode: luminosity"
+      />
+      <div class="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-10 text-sm sm:flex-row sm:items-start">
+        <div class="text-center sm:text-left">
+          <p class="font-semibold text-white">Zyanesha's Transient House</p>
+          <p class="mt-1">Bulala Norte, Vigan City, Ilocos Sur</p>
+        </div>
+        <div class="flex flex-col items-center gap-1 sm:items-end">
+          <span>+63 910 983 3388</span>
+          <span>bheng.ardiente@yahoo.com</span>
+          <a href="https://www.facebook.com/zyanesha/" target="_blank" rel="noopener" class="transition hover:text-white">facebook.com/zyanesha</a>
+          <p class="mt-2 text-center text-neutral-500 sm:text-right">&copy; 2026 Zyanesha<span class="hidden sm:inline">'s Transient House</span>. All rights reserved.</p>
+          <div class="mt-1 flex items-center gap-1.5 text-sm text-neutral-500">
+            <span>Powered by</span>
+            <img
+              src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,h_60/v1781441166/Untitled_design_12_b6ficv.png"
+              alt="Powered by"
+              class="h-5 w-auto opacity-80 -ml-1.5"
+            />
+            <span class="-ml-2.5 !text-purple-300">chema</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lightbox: click a property photo to zoom it over a blurred backdrop; click backdrop to close -->
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center p-6" aria-hidden="true" role="dialog" aria-modal="true">
+      <div id="lightboxBg" class="absolute inset-0 bg-black/50 backdrop-blur-md"></div>
+      <img id="lightboxImg" src="" alt="" class="relative max-h-[88vh] max-w-[92vw] rounded-2xl shadow-2xl" />
+    </div>
+
+    <!-- Sticky scroll-down indicator with gradient blur -->
+    <div id="scrollCue" class="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex h-28 items-end justify-center">
+      <!-- gradient-masked blur: strongest at the bottom, fading to clear upward -->
+      <div
+        class="absolute inset-0"
+        style="
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          -webkit-mask-image: linear-gradient(to top, black 0%, black 35%, transparent 100%);
+          mask-image: linear-gradient(to top, black 0%, black 35%, transparent 100%);
+        "
+      ></div>
+      <!-- soft wash (slightly darker than the cream bg) to lift the arrow off the content -->
+      <div class="absolute inset-0 bg-gradient-to-t from-[#e9dcc6] via-[#e9dcc6]/60 to-transparent"></div>
+
+      <a
+        href="#gallery"
+        aria-label="Scroll down to see more"
+        class="pointer-events-auto relative flex flex-col items-center gap-1 pb-5 text-neutral-500 transition hover:text-neutral-800"
+      >
+        <span class="text-xs font-medium uppercase tracking-widest">Scroll</span>
+        <svg class="h-6 w-6 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- Continuous float (design-skills: continuous-float) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Respect reduced-motion, and collect the never-ending loops so we can pause
+      // them while their section is offscreen (saves battery/FPS on low-end phones).
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const heroLoops = []; // collage + review float loops (pause when hero scrolled away)
+      const ctaLoops = [];  // jagged bar loops (pause until the CTA is in view)
+
+      // ── Hero load-in ─────────────────────────────────────────────────────
+      // Cursive name → title → contact rise/fade up in sequence, then the
+      // collage photos pop in with a slight overshoot.
+      if (reduceMotion) {
+        // No motion: just reveal everything that's pre-hidden.
+        gsap.set('.hero-eyebrow, .hero-title, .hero-cta, .float-el, .r-part', { autoAlpha: 1, y: 0, scale: 1 });
+      } else {
+        gsap
+          .timeline({ defaults: { ease: 'power3.out' } })
+          .fromTo('.hero-eyebrow', { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9 }, 0.1)
+          .fromTo('.hero-title', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9 }, '-=0.62')
+          .fromTo('.hero-cta', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, '-=0.6')
+          .fromTo(
+            '.float-el',
+            { scale: 0.75, autoAlpha: 0 },
+            { scale: 1, autoAlpha: 1, duration: 0.8, ease: 'back.out(1.7)', stagger: 0.12 },
+            '-=0.7'
+          );
+      }
+
+      if (!reduceMotion) gsap.utils.toArray('.float-el').forEach((el, i) => {
+        const rx = 5 + i * 1.5;      // horizontal orbit radius (px)
+        const ry = 8 + i * 2;        // vertical radius — ry > rx = mostly-vertical drift
+        const p = { a: i * 2.1 };    // phase offset → each card drifts out of sync (delayed, not reversed)
+        heroLoops.push(gsap.to(p, {
+          a: '+=' + Math.PI * 2,
+          duration: 6.5 + i * 0.6,   // slightly different per card so they never resync
+          ease: 'none',              // constant speed — never stops
+          repeat: -1,
+          onUpdate() {
+            gsap.set(el, { x: Math.cos(p.a) * rx, y: Math.sin(p.a) * ry });
+          },
+        }));
+      });
+
+      // Reveals should fire once the block is a bit into view so you actually
+      // see them play — later on phones (short viewports made them fire too early).
+      const revealStart = () => 'top ' + (window.innerWidth < 640 ? 72 : 82) + '%';
+
+      // ── Scroll reveals ───────────────────────────────────────────────────
+      // Fade + rise the below-hero blocks into view as you scroll to them.
+      if (reduceMotion) {
+        gsap.set('.reveal', { autoAlpha: 1, y: 0 });
+      } else {
+        gsap.set('.reveal', { y: 28 });
+        ScrollTrigger.batch('.reveal', {
+          start: revealStart(),
+          once: true, // reveal once, then leave it alone
+          onEnter: (els) =>
+            gsap.to(els, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.7,
+              ease: 'power3.out',
+              stagger: 0.1, // neighbouring items cascade in
+              overwrite: true,
+            }),
+        });
+
+        // Property photos reveal a touch earlier than text/flourishes so they don't
+        // feel late (especially on phones, where they sit low in the stacked layout).
+        const photoStart = () => 'top ' + (window.innerWidth < 640 ? 92 : 86) + '%';
+        gsap.set('.reveal-photo', { y: 24 });
+        ScrollTrigger.batch('.reveal-photo', {
+          start: photoStart(),
+          once: true,
+          onEnter: (els) =>
+            gsap.to(els, {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.6,
+              ease: 'power3.out',
+              stagger: 0.08,
+              overwrite: true,
+            }),
+        });
+      }
+      if (reduceMotion) gsap.set('.reveal-photo', { autoAlpha: 1, y: 0 });
+
+      // ── CTA title: word-by-word fade + rise (overlapping, ~1s total) ──────
+      (function () {
+        const title = document.querySelector('.cta-title');
+        const btn = document.querySelector('.cta-btn');
+        if (!title) return;
+        // Per-letter spans, but each WORD wrapped in a nowrap box so a word never
+        // breaks mid-letter (e.g. "f\nrom"); spaces between words still wrap normally.
+        title.innerHTML = title.textContent
+          .trim()
+          .split(/\s+/)
+          .map(
+            (word) =>
+              '<span class="inline-block whitespace-nowrap">' +
+              word
+                .split('')
+                .map((ch) => '<span class="ltr inline-block">' + ch + '</span>')
+                .join('') +
+              '</span>'
+          )
+          .join(' ');
+        const spans = title.querySelectorAll('.ltr');
+        if (reduceMotion) {
+          gsap.set(spans, { autoAlpha: 1, y: 0 });
+          return;
+        }
+        const TOTAL = 1.5; // whole line resolves in ~1.5s
+        const letterDur = 0.5;
+        gsap.from(spans, {
+          y: 24,
+          autoAlpha: 0,
+          duration: letterDur,
+          ease: 'power3.out',
+          // overlapping one-by-one across all letters → ~1.5s end to end
+          stagger: (TOTAL - letterDur) / Math.max(spans.length - 1, 1),
+          scrollTrigger: { trigger: title, start: revealStart(), once: true },
+        });
+        if (btn) {
+          gsap.from(btn, {
+            y: 16,
+            autoAlpha: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            delay: TOTAL - 0.1, // arrives just as the last letter lands
+            scrollTrigger: { trigger: title, start: revealStart(), once: true },
+          });
+        }
+      })();
+
+// Play the sticky scroll cue's fade as an animation once you scroll past a point
+      gsap.to('#scrollCue', {
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+        scrollTrigger: {
+          start: () => window.innerHeight * 0.25, // fire after ~25% of a screen scrolled
+          toggleActions: 'play none none reverse', // fade out going down, fade in coming back up
+        },
+      });
+
+      // CTA jagged bars — each slides infinitely by exactly one tooth (46px) so the zigzag
+      // scrolls seamlessly; direction alternates per bar (L→R, R→L, L→R, …).
+      if (!reduceMotion) gsap.utils.toArray('.jag-bar').forEach((bar, i) => {
+        const tooth = 46;
+        const dir = i % 2 === 0 ? -1 : 1; // even bars scroll one way, odd bars the other
+        ctaLoops.push(gsap.fromTo(
+          bar,
+          { x: 0 },
+          { x: dir * tooth, duration: 5 + i * 0.6, ease: 'none', repeat: -1 }
+        ));
+      });
+
+      // Chatty review bubbles over the hero collage — chat-bubble-pop physics, staggered on load.
+      // NOTE: we animate the avatar + bubble (.r-part) as siblings, NOT their container. The
+      // container must stay untransformed, otherwise the bubble's backdrop-blur (frosted glass)
+      // captures an empty backdrop and shows no blur (transformed-ancestor gotcha).
+      if (!reduceMotion) gsap.utils.toArray('.review-pop').forEach((pop, i) => {
+        const parts = pop.querySelectorAll('.r-part'); // [avatar, bubble]
+        const dir = i === 0 ? -1 : 1;
+        gsap.set(parts, {
+          scale: 0,
+          autoAlpha: 0,
+          rotation: 0,
+          transformOrigin: i === 0 ? 'left bottom' : 'right bottom',
+        });
+        gsap
+          .timeline({ delay: 2.1 + i * 0.55 })
+          .to(parts, { scale: 1, autoAlpha: 1, duration: 0.55, ease: 'back.out(3)' })
+          .to(parts, { rotation: dir * 6, duration: 0.16, ease: 'power3.out' }, '<0.18')
+          .to(parts, { rotation: 0, duration: 0.75, ease: 'elastic.out(1, 0.5)' });
+
+        // continuous-float (slow) — avatar + bubble share identical x/y so they drift as one unit
+        const rx = 3 + i;              // small horizontal orbit (px)
+        const ry = 6 + i * 1.5;        // ry > rx = gentle mostly-vertical drift
+        const p = { a: i * 2.1 };      // phase offset → the two reviews drift out of sync
+        heroLoops.push(gsap.to(p, {
+          a: '+=' + Math.PI * 2,
+          duration: 11 + i * 1.5,      // really slow — one lazy orbit every ~11–13s
+          ease: 'none',                // constant speed — never stops
+          repeat: -1,
+          onUpdate() {
+            gsap.set(parts, { x: Math.cos(p.a) * rx, y: Math.sin(p.a) * ry });
+          },
+        }));
+      });
+
+      // Rotate the hero bubbles through the real Airbnb guest reviews while the
+      // hero is on screen — one bubble swaps at a time, alternating sides.
+      if (!reduceMotion) {
+        const heroReviews = [
+          { name: 'Enrico Louis', text: 'Very polite host, very comfortable place' },
+          { name: 'Herminio', text: 'Very accommodating and helpful' },
+          { name: 'Zaira', text: "Along the road with its own parking — nearby eateries and easy to get anywhere in Vigan." },
+          { name: 'Lenny Ann Joy', text: 'Very accommodating and helpful :)' },
+          { name: 'Rolando', text: 'Very clean, and I felt at peace in the area.' },
+          { name: 'Jefrey', text: 'We enjoyed our stay. We will surely come back!' },
+          { name: 'Evelyn', text: 'A wonderful place, clean and well maintained. Bheng is very nice, accommodating, and quick to respond.' },
+          { name: 'Nicolette', text: 'Very clean and the aircon was already on before we arrived, so we could rest immediately.' },
+          { name: 'Kristiana', text: 'Thanks for accommodating my family and for the seamless check-in process.' },
+          { name: 'Chen', text: 'Thanks so much for accommodating us! It was a great place to stay :)' },
+        ];
+        const initials = (name) => {
+          const p = name.trim().split(/\s+/);
+          return (p[0][0] + (p[1] ? p[1][0] : '')).toUpperCase();
+        };
+        const bubbles = gsap.utils.toArray('.review-pop').map((pop) => ({
+          parts: pop.querySelectorAll('.r-part'),
+          avatar: pop.querySelector('.r-avatar'),
+          name: pop.querySelector('.r-name'),
+          text: pop.querySelector('.r-text'),
+        }));
+        const applyReview = (b, r) => {
+          b.avatar.textContent = initials(r.name);
+          b.name.textContent = r.name;
+          b.text.textContent = r.text;
+        };
+
+        if (bubbles.length) {
+          let heroVisible = true;
+          new IntersectionObserver(
+            (entries) => { heroVisible = entries[0].isIntersecting; },
+            { rootMargin: '0px' }
+          ).observe(document.querySelector('main'));
+
+          let nextReview = bubbles.length;   // first two reviews already shown
+          let turn = 0;                      // which bubble swaps next
+          const swap = () => {
+            if (!heroVisible || document.hidden) return;
+            const bi = turn % bubbles.length;
+            const b = bubbles[bi];
+            const r = heroReviews[nextReview % heroReviews.length];
+            gsap
+              .timeline()
+              .to(b.parts, {
+                scale: 0.5,
+                autoAlpha: 0,
+                duration: 0.28,
+                ease: 'back.in(1.7)',
+                transformOrigin: bi === 0 ? 'left bottom' : 'right bottom',
+              })
+              .add(() => applyReview(b, r))
+              .to(b.parts, { scale: 1, autoAlpha: 1, duration: 0.5, ease: 'back.out(2.4)' });
+            nextReview++;
+            turn++;
+          };
+          // start after the initial pop-in has settled, then swap every ~2.8s
+          setTimeout(() => setInterval(swap, 2800), 5200);
+        }
+      }
+
+      // ── Perf: pause the never-ending loops while their section is off-screen ──
+      // The blurred review bubbles + collage float are the priciest thing on a low-end
+      // GPU (backdrop-filter re-rasterizes every frame), and the CTA bars run forever near
+      // the footer. Only animate them when they're actually visible.
+      function pauseWhenOffscreen(target, loops) {
+        if (!target || !loops.length) return;
+        new IntersectionObserver(
+          (entries) => {
+            const visible = entries[0].isIntersecting;
+            loops.forEach((t) => (visible ? t.resume() : t.pause()));
+          },
+          { rootMargin: '100px' }
+        ).observe(target);
+      }
+      pauseWhenOffscreen(document.querySelector('main'), heroLoops);
+      pauseWhenOffscreen(document.getElementById('pricing'), ctaLoops);
+
+      // Location divider: add .is-in when it scrolls into view so it expands from its center.
+      gsap.utils.toArray('.loc-divider').forEach((line) => {
+        if (reduceMotion) return; // CSS already shows it full-size under reduced motion
+        new IntersectionObserver(
+          (entries, obs) => {
+            if (entries[0].isIntersecting) {
+              entries[0].target.classList.add('is-in');
+              obs.disconnect();
+            }
+          },
+          { threshold: 0.6 }
+        ).observe(line);
+      });
+
+      // ── Kicker flourishes: start over the text, then ease outward + fade in,
+      //    slightly after the section's own reveal. ─────────────────────────
+      gsap.utils.toArray('.kicker').forEach((p) => {
+        const fls = p.querySelectorAll('.fl'); // [left, right] flourish wrappers
+        if (!fls.length) return;
+        if (reduceMotion) {
+          gsap.set(fls, { autoAlpha: 1, x: 0 });
+          return;
+        }
+        fls.forEach((el, i) => {
+          gsap.fromTo(
+            el,
+            { x: i === 0 ? 22 : -22, autoAlpha: 0 }, // begin tucked over the text
+            {
+              x: 0,
+              autoAlpha: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+              delay: 0.3, // lag behind the section fade-in a touch
+              scrollTrigger: { trigger: p, start: revealStart(), once: true },
+            }
+          );
+        });
+      });
+
+      // ── Property photo lightbox ──────────────────────────────────────────
+      // Click a gallery photo → zoom it over a blurred backdrop. Click the
+      // backdrop (anywhere but the image) to close; Esc also closes.
+      (function () {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxBg = document.getElementById('lightboxBg');
+        if (!lightbox || !lightboxImg) return;
+
+        // backdrop-filter renders at its full blur radius regardless of the
+        // parent's opacity. The backdrop blur is applied instantly via the
+        // static `backdrop-blur-md` class — only the tint/image ease in.
+        function open(src, alt) {
+          lightboxImg.src = src;
+          lightboxImg.alt = alt || '';
+          lightbox.classList.remove('hidden');
+          lightbox.classList.add('flex');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          if (!reduceMotion) {
+            gsap.fromTo(
+              lightbox,
+              { autoAlpha: 0 },
+              { autoAlpha: 1, duration: 0.2, ease: 'power2.out' }
+            );
+            gsap.fromTo(
+              lightboxImg,
+              { scale: 0.9, autoAlpha: 0 },
+              { scale: 1, autoAlpha: 1, duration: 0.32, ease: 'back.out(1.6)' }
+            );
+          }
+        }
+        function close() {
+          lightbox.classList.add('hidden');
+          lightbox.classList.remove('flex');
+          lightbox.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          lightboxImg.src = '';
+        }
+
+        document.querySelectorAll('#gallery img').forEach((img) => {
+          img.style.cursor = 'zoom-in';
+          img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt));
+        });
+        // Click the backdrop to exit; clicking the image itself does not close.
+        lightbox.addEventListener('click', close);
+        lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) close();
+        });
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/azzan-art/pkg-schema-watermark@a9f1385/$.js"></script>
+  </body>
+</html>
