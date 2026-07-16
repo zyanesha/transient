@@ -103,6 +103,7 @@
       }
     </script>
 
+    <link rel="preconnect" href="https://res.cloudinary.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -113,10 +114,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
     <link rel="stylesheet" href="./css/output.css" />
 
+    <!-- Progressive enhancement: only pre-hide content when JS is present (so a no-JS or
+         blocked-script visitor still sees everything), and never let the page sit blank —
+         if GSAP hasn't initialised soon after parse, force-reveal it all. -->
+    <script>
+      var _root = document.documentElement;
+      _root.classList.add('js');
+      setTimeout(function () {
+        if (!window.gsap) _root.classList.add('no-anim');
+      }, 2500);
+    </script>
+
     <!-- Pre-hide load-in elements so there's no flash before GSAP runs -->
     <style>
-      .anim-in { opacity: 0; }
-      .reveal, .reveal-photo { opacity: 0; } /* pre-hidden; ScrollTrigger fades these up on scroll */
+      .js .anim-in { opacity: 0; }
+      .js .reveal, .js .reveal-photo { opacity: 0; } /* pre-hidden; ScrollTrigger fades these up on scroll */
+
+      /* Failsafe: if GSAP never loads, un-hide everything so the page can't stay blank. */
+      .no-anim .anim-in, .no-anim .reveal, .no-anim .reveal-photo { opacity: 1 !important; }
+      .no-anim [style*="visibility: hidden"] { visibility: visible !important; }
 
       /* Location divider: grows from its center when scrolled into view —
          horizontal (scaleX) on mobile, vertical (scaleY) on md+. */
@@ -584,8 +600,8 @@
     </div>
 
     <!-- Continuous float (design-skills: continuous-float) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="./js/vendor/gsap.min.js"></script>
+    <script src="./js/vendor/ScrollTrigger.min.js"></script>
     <script>
       gsap.registerPlugin(ScrollTrigger);
 
