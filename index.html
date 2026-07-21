@@ -114,6 +114,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
     <link rel="stylesheet" href="./css/output.css" />
 
+    <!-- Start fetching the animation libs immediately, in parallel with the CSS —
+         otherwise the browser only discovers them at the bottom of <body>, leaving
+         the pre-hidden hero sitting invisible (grey) until they finally download. -->
+    <link rel="preload" href="./js/vendor/gsap.min.js" as="script" />
+    <link rel="preload" href="./js/vendor/ScrollTrigger.min.js" as="script" />
+
     <!-- Progressive enhancement: only pre-hide content when JS is present (so a no-JS or
          blocked-script visitor still sees everything), and never let the page sit blank —
          if GSAP hasn't initialised soon after parse, force-reveal it all. -->
@@ -122,7 +128,7 @@
       _root.classList.add('js');
       setTimeout(function () {
         if (!window.gsap) _root.classList.add('no-anim');
-      }, 2500);
+      }, 1200);
     </script>
 
     <!-- Pre-hide load-in elements so there's no flash before GSAP runs -->
@@ -191,6 +197,7 @@
         <img
           src="https://res.cloudinary.com/dyiypemve/image/upload/f_auto,q_auto,w_900/v1783860558/Untitled_design_14_qucau1.png"
           alt="Zyanesha's logo"
+          fetchpriority="high"
           class="mx-auto block h-[8em] w-[12em] object-cover"
         />
         <p
